@@ -42,7 +42,28 @@ router.post("/runs", (req, res, next) => {
 })
 
 //UPDATE
+//PATCH /runs/:id
+router.patch("/runs/:id", (req, res, next) => {
+    Run.findById(req.params.id)
+        //.then(handle404) 
+        .then(run => {
+            return run.updateOne(req.body.run)
+        })
+        .then(() => res.sendStatus(204)) //success, no content returned
+        .catch(next)
+})
 
 //DELETE
+//DELETE /runs/:id
+router.delete('/runs/:id', (req, res, next) => {
+	Run.findById(req.params.id)
+		.then((run) => {
+			run.deleteOne()
+		})
+		.then(() => res.sendStatus(204))
+		.catch(next)
+})
+
+
 
 module.exports = router
