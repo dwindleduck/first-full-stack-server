@@ -1,5 +1,7 @@
 const express = require("express")
 
+const { handle404 } = require("../lib/custom-errors")
+
 const Run = require("../models/run")
 
 const router = express.Router()
@@ -23,6 +25,7 @@ router.get("/runs", (req, res, next) => {
 //Get /runs/:id
 router.get("/runs/:id", (req, res, next) => {
     Run.findById(req.params.id)
+        .then(handle404) 
         .then(run => {
             res.status(200).json({ run: run})
         })
@@ -45,7 +48,7 @@ router.post("/runs", (req, res, next) => {
 //PATCH /runs/:id
 router.patch("/runs/:id", (req, res, next) => {
     Run.findById(req.params.id)
-        //.then(handle404) 
+        .then(handle404) 
         .then(run => {
             return run.updateOne(req.body.run)
         })
@@ -57,7 +60,8 @@ router.patch("/runs/:id", (req, res, next) => {
 //DELETE /runs/:id
 router.delete('/runs/:id', (req, res, next) => {
 	Run.findById(req.params.id)
-		.then((run) => {
+        .then(handle404) 
+        .then((run) => {
 			run.deleteOne()
 		})
 		.then(() => res.sendStatus(204))
