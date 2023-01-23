@@ -37,6 +37,8 @@ const runSchema = new Schema({
 })
 
 //mongosh collection will be 'characters'
-const Run = mongoose.model("Run", runSchema)
+//const Run = mongoose.model("Run", runSchema)
 
-module.exports = Run
+//module.exports = Run
+
+module.exports = runSchema

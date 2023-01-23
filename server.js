@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require("cors")
 const runRoutes = require("./routes/run_routes")
+const userRoutes = require("./routes/user_routes")
 const requestLogger = require('./lib/request-logger')
 const runSeed = require("./lib/runs-seed")
 
@@ -28,6 +29,7 @@ app.use(cors({ origin: "http://127.0.0.1:5502" }))
 app.use(express.json())
 app.use(requestLogger)
 app.use(runRoutes)
+app.use(userRoutes)
 app.use("/seed", runSeed)
 
 app.listen(PORT, () => {
